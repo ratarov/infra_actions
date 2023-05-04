@@ -56,13 +56,11 @@ jobs:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.TESTSERVER_HOST }}
+        host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.TESTSERVER_SSH_KEY }}
+        key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          # Выполняет pull образа с DockerHub
           sudo docker pull ratarov/infra
-          #остановка всех контейнеров
           sudo docker stop $(sudo docker ps -a -q)
           sudo docker run --rm -d -p 5000:5000 ratarov/infra
